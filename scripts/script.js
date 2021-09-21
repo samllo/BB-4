@@ -67,13 +67,16 @@ var Circle = /** @class */ (function () {
         this.ball.x += this.ball.velocityx;
         this.ball.y += this.ball.velocityy;
     };
+    Circle.prototype.removeball = function () {
+        Circlearray[z].removeball(app.stage.removeChild(this.ball));
+    };
     return Circle;
 }());
 //Extends ball creation class with a method thatn can be updated using update loop set of by ticker
 // x/y direction is reveresed when balls anchor reaches limits of appheight and width
 //For loop places 25 balls into circle array
 var Circlearray = [];
-for (var i = 0; i < 25; i++) {
+for (var i = 0; i < 5; i++) {
     Circlearray.push(new Circle(radius, x, y, 0xDE3249));
 }
 // ticker triggers update() method of CIRCLES
@@ -92,8 +95,9 @@ var buttonPositions = [
     100, 500,
     200, 500,
     300, 500,
+    400, 500,
 ];
-for (var i = 0; i < 3; i++) {
+for (var i = 0; i < 4; i++) {
     var button = new PIXI.Sprite(textureButton);
     button.anchor.set(0.5);
     button.x = buttonPositions[i * 2];
@@ -108,6 +112,7 @@ for (var i = 0; i < 3; i++) {
 buttons[0].scale.set(0.1);
 buttons[1].scale.set(0.1);
 buttons[2].scale.set(0.1);
+buttons[3].scale.set(0.1);
 // Struggled to minimise all these function calls
 buttons[0].on('mousedown', button0D);
 buttons[0].on('mouseup', button0U);
@@ -152,6 +157,21 @@ function button2U() {
     this.texture = textureButton;
     this.isdown = false;
     ticker.start();
+}
+// button 4 remove ball
+buttons[3].on('mousedown', button3D);
+buttons[3].on('mouseup', button3U);
+var z = 0;
+function button3D() {
+    Circlearray[z].removeball();
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+}
+function button3U() {
+    this.texture = textureButton;
+    this.isdown = false;
+    z++;
 }
 //effects
 // basic scale change on hover, couldn't get fades to work

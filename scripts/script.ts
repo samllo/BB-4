@@ -71,6 +71,9 @@ class Circle {
     this.ball.x += this.ball.velocityx;
     this.ball.y += this.ball.velocityy;
   }
+
+  removeball(){
+      Circlearray[z].removeball(app.stage.removeChild(this.ball));
 }
 
 //Extends ball creation class with a method thatn can be updated using update loop set of by ticker
@@ -80,7 +83,7 @@ class Circle {
 
 //For loop places 25 balls into circle array
 let Circlearray=[];
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 5; i++) {
   Circlearray.push(new Circle(radius,x ,y, 0xDE3249));
 }
 
@@ -103,9 +106,10 @@ const buttonPositions = [
     100, 500,
     200, 500,
     300, 500,
+    400, 500,
 ]
 
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 4; i++) {
   const button = new PIXI.Sprite(textureButton);
   button.anchor.set(0.5);
   button.x = buttonPositions[i * 2];
@@ -121,6 +125,7 @@ for (let i = 0; i < 3; i++) {
 buttons[0].scale.set(0.1);
 buttons[1].scale.set(0.1);
 buttons[2].scale.set(0.1);
+buttons[3].scale.set(0.1);
 
 
 // Struggled to minimise all these function calls
@@ -177,8 +182,26 @@ function button2U(){
   ticker.start();
 }
 
-//effects
+// button 4 remove ball
+buttons[3].on('mousedown', button3D)
+buttons[3].on('mouseup', button3U)
 
+let z = 0;
+
+function button3D(){
+  Circlearray[z].removeball();
+  this.texture = textureButtonDown;
+  this.alpha = 1;
+  this.isdown = true;
+}
+
+function button3U(){
+  this.texture = textureButton;
+  this.isdown = false;
+  z++;
+}
+
+//effects
 // basic scale change on hover, couldn't get fades to work
 function movebutton1() {
   TweenMax.to(buttons[0].scale.set(0.12));
@@ -237,4 +260,10 @@ text3.style = new PIXI.TextStyle({
 })
 
 app.stage.addChild(text3)
+
+
+
+
+
+
 
