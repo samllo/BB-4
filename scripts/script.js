@@ -76,7 +76,7 @@ var Circle = /** @class */ (function () {
 // x/y direction is reveresed when balls anchor reaches limits of appheight and width
 //For loop places 25 balls into circle array
 var Circlearray = [];
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 25; i++) {
     Circlearray.push(new Circle(radius, x, y, 0xDE3249));
 }
 // ticker triggers update() method of CIRCLES
@@ -90,6 +90,40 @@ ticker.add(function (delta) {
 var textureButton = PIXI.Texture.from('images/bluebut.png');
 var textureButtonDown = PIXI.Texture.from('images/redbut.png');
 var buttons = [];
+var buttonArray = [];
+var butX = 100;
+/// button class 
+var BUTTONS = /** @class */ (function () {
+    function BUTTONS() {
+        var but = new PIXI.Sprite(textureButton);
+        but.anchor.set(0.5);
+        but.x = butX;
+        but.y = 350;
+        // interactive
+        but.interactive = true;
+        but.buttonMode = true;
+        but;
+        but.scale.set(0.1);
+        app.stage.addChild(but);
+        but.on('mousedown', buttonDOWN);
+        but.on('mouseup', buttonUP);
+    }
+    return BUTTONS;
+}());
+function buttonDOWN() {
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+}
+function buttonUP() {
+    gravity = 0.1;
+    this.texture = textureButton;
+    this.isdown = false;
+}
+for (var i = 0; i < 4; i++) {
+    buttonArray.push(new BUTTONS);
+    butX += 100;
+}
 // button posiiton in array and for loop creating 3
 var buttonPositions = [
     100, 500,
@@ -163,10 +197,10 @@ buttons[3].on('mousedown', button3D);
 buttons[3].on('mouseup', button3U);
 var z = 0;
 function button3D() {
-    Circlearray[z].removeball();
     this.texture = textureButtonDown;
     this.alpha = 1;
     this.isdown = true;
+    Circlearray[z].removeball();
 }
 function button3U() {
     this.texture = textureButton;

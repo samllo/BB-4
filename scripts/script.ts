@@ -83,7 +83,7 @@ class Circle {
 
 //For loop places 25 balls into circle array
 let Circlearray=[];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 25; i++) {
   Circlearray.push(new Circle(radius,x ,y, 0xDE3249));
 }
 
@@ -100,6 +100,44 @@ const textureButton = PIXI.Texture.from('images/bluebut.png');
 const textureButtonDown = PIXI.Texture.from('images/redbut.png');
 const buttons = [];
 
+const buttonArray=[];
+
+let butX = 100;
+
+/// button class 
+class BUTTONS {
+  constructor() {
+      const but = new PIXI.Sprite(textureButton);
+      but.anchor.set(0.5);
+      but.x = butX;
+      but.y = 350;
+      // interactive
+      but.interactive = true;
+      but.buttonMode = true;
+      but
+      but.scale.set(0.1);
+      app.stage.addChild(but);
+      but.on('mousedown', buttonDOWN)
+      but.on('mouseup', buttonUP)
+  }
+}
+
+function buttonDOWN(){
+  this.texture = textureButtonDown;
+  this.alpha = 1;
+  this.isdown = true;
+}
+
+function buttonUP(){
+  gravity = 0.1;
+  this.texture = textureButton;
+  this.isdown = false;
+}
+
+for (let i = 0; i < 4; i++) {
+  buttonArray.push(new BUTTONS);
+  butX+=100;
+}
 
 // button posiiton in array and for loop creating 3
 const buttonPositions = [
@@ -189,10 +227,10 @@ buttons[3].on('mouseup', button3U)
 let z = 0;
 
 function button3D(){
-  Circlearray[z].removeball();
   this.texture = textureButtonDown;
   this.alpha = 1;
   this.isdown = true;
+  Circlearray[z].removeball();
 }
 
 function button3U(){
