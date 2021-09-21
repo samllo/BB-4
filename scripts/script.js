@@ -1,18 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 // variables and gsap setup
 var appHeight = 600;
 var appWidth = 700;
@@ -58,16 +43,7 @@ var Circle = /** @class */ (function () {
         app.stage.addChild(ball);
         this.ball = ball;
     }
-    return Circle;
-}());
-//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
-// x/y direction is reveresed when balls anchor reaches limits of appheight and width
-var CIRCLES = /** @class */ (function (_super) {
-    __extends(CIRCLES, _super);
-    function CIRCLES() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    CIRCLES.prototype.update = function () {
+    Circle.prototype.update = function () {
         if (this.ball.y + radius >= appHeight) {
             this.ball.velocityy = -this.ball.velocityy;
             this.ball.y = appHeight - radius;
@@ -91,12 +67,14 @@ var CIRCLES = /** @class */ (function (_super) {
         this.ball.x += this.ball.velocityx;
         this.ball.y += this.ball.velocityy;
     };
-    return CIRCLES;
-}(Circle));
+    return Circle;
+}());
+//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
+// x/y direction is reveresed when balls anchor reaches limits of appheight and width
 //For loop places 25 balls into circle array
 var Circlearray = [];
 for (var i = 0; i < 25; i++) {
-    Circlearray.push(new CIRCLES(radius, x, y, 0xDE3249));
+    Circlearray.push(new Circle(radius, x, y, 0xDE3249));
 }
 // ticker triggers update() method of CIRCLES
 var delta = 1;
@@ -151,7 +129,7 @@ buttons[1].on('mouseup', button1U);
 buttons[1].on('mouseover', movebutton2);
 buttons[1].on('mouseout', movebutton2back);
 function button1D() {
-    Circlearray.push(new CIRCLES(radius, x, y, 0x0000FF));
+    Circlearray.push(new Circle(radius, x, y, 0x0000FF));
     this.texture = textureButtonDown;
     this.alpha = 1;
     this.isdown = true;

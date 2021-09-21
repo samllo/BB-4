@@ -45,13 +45,6 @@ class Circle {
       app.stage.addChild(ball);
       this.ball= ball;
   }
-
-}
-
-//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
-
-// x/y direction is reveresed when balls anchor reaches limits of appheight and width
-class CIRCLES extends Circle {
   update() {
     if (this.ball.y + radius >= appHeight ) {
       this.ball.velocityy = -this.ball.velocityy
@@ -78,13 +71,17 @@ class CIRCLES extends Circle {
     this.ball.x += this.ball.velocityx;
     this.ball.y += this.ball.velocityy;
   }
-
 }
+
+//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
+
+// x/y direction is reveresed when balls anchor reaches limits of appheight and width
+
 
 //For loop places 25 balls into circle array
 let Circlearray=[];
 for (let i = 0; i < 25; i++) {
-  Circlearray.push(new CIRCLES (radius,x ,y, 0xDE3249));
+  Circlearray.push(new Circle(radius,x ,y, 0xDE3249));
 }
 
 // ticker triggers update() method of CIRCLES
@@ -151,7 +148,7 @@ buttons[1].on('mouseover', movebutton2)
 buttons[1].on('mouseout', movebutton2back)
 
 function button1D(){
-  Circlearray.push(new CIRCLES (radius,x ,y,0x0000FF))
+  Circlearray.push(new Circle (radius,x ,y,0x0000FF))
   this.texture = textureButtonDown;
   this.alpha = 1;
   this.isdown = true;
