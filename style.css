@@ -1,0 +1,32 @@
+
+body{
+  width:100vw;
+  display: flex;
+  flex-direction: row;
+}
+#hid{
+  font-family: 'Orbitron', sans-serif;
+  font-size:0;
+}
+
+#screen{
+  width: 60vw;
+  position: absolute;
+}
+
+#links{
+  font-family: 'Orbitron', sans-serif;
+  position:relative;
+  padding-top: 50%;
+  margin-left: 70vw;
+  width: 30vw;
+  transform: translateY(-50%);
+  color: black;
+}
+
+.linkTiles{
+  padding:2rem;
+  margin-top:auto;
+  text-align: center;
+  font-size:2rem;
+}
