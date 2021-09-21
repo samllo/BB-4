@@ -92,38 +92,6 @@ var textureButtonDown = PIXI.Texture.from('images/redbut.png');
 var buttons = [];
 var buttonArray = [];
 var butX = 100;
-/// button class 
-var BUTTONS = /** @class */ (function () {
-    function BUTTONS() {
-        var but = new PIXI.Sprite(textureButton);
-        but.anchor.set(0.5);
-        but.x = butX;
-        but.y = 350;
-        // interactive
-        but.interactive = true;
-        but.buttonMode = true;
-        but;
-        but.scale.set(0.1);
-        app.stage.addChild(but);
-        but.on('mousedown', buttonDOWN);
-        but.on('mouseup', buttonUP);
-    }
-    return BUTTONS;
-}());
-function buttonDOWN() {
-    this.texture = textureButtonDown;
-    this.alpha = 1;
-    this.isdown = true;
-}
-function buttonUP() {
-    gravity = 0.1;
-    this.texture = textureButton;
-    this.isdown = false;
-}
-for (var i = 0; i < 4; i++) {
-    buttonArray.push(new BUTTONS);
-    butX += 100;
-}
 // button posiiton in array and for loop creating 3
 var buttonPositions = [
     100, 500,
@@ -258,3 +226,56 @@ text3.style = new PIXI.TextStyle({
     fontFamily: 'Orbitron'
 });
 app.stage.addChild(text3);
+text4 = new PIXI.Text("Remove");
+text4.x = 400;
+text4.y = 550;
+text4.anchor.set(0.5);
+text4.style = new PIXI.TextStyle({
+    fill: 0x000000,
+    fontSize: 20,
+    fontFamily: 'Orbitron'
+});
+app.stage.addChild(text4);
+/// button class 
+var BUTTONS = /** @class */ (function () {
+    function BUTTONS() {
+        var but = new PIXI.Sprite(textureButton);
+        but.anchor.set(0.5);
+        but.x = butX;
+        but.y = 350;
+        // interactive
+        but.interactive = true;
+        but.buttonMode = true;
+        but;
+        but.scale.set(0.1);
+        app.stage.addChild(but);
+        but.on('mousedown', buttonDOWN);
+        but.on('mouseup', buttonUP);
+        but.on('mouseover', movebutton);
+        but.on('mouseout', movebuttonback);
+    }
+    return BUTTONS;
+}());
+for (var i = 0; i < 4; i++) {
+    buttonArray.push(new BUTTONS);
+    butX += 100;
+}
+function buttonDOWN() {
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+}
+function buttonUP() {
+    this.texture = textureButton;
+    this.isdown = false;
+}
+function movebutton() {
+    TweenMax.to(this.scale.set(0.12));
+}
+function movebuttonback() {
+    TweenMax.to(this.scale.set(0.1));
+}
+buttonArray[0].on('mousedown', but0D);
+function but0D() {
+    gravity = 1.2;
+}

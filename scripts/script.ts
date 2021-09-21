@@ -73,7 +73,7 @@ class Circle {
   }
 
   removeball(){
-      Circlearray[z].removeball(app.stage.removeChild(this.ball));
+      Circlearray[z].removeball(app.stage.removeChild(this.ball));}
 }
 
 //Extends ball creation class with a method thatn can be updated using update loop set of by ticker
@@ -87,13 +87,21 @@ for (let i = 0; i < 25; i++) {
   Circlearray.push(new Circle(radius,x ,y, 0xDE3249));
 }
 
+
+
 // ticker triggers update() method of CIRCLES
+
 let delta = 1;
+
+
 ticker.add((delta) => {
   Circlearray.forEach(c => {
     c.update();
-  })
+  });
 }
+
+
+
 
 /* Buttons images for pressed unpressed*/
 const textureButton = PIXI.Texture.from('images/bluebut.png');
@@ -103,41 +111,6 @@ const buttons = [];
 const buttonArray=[];
 
 let butX = 100;
-
-/// button class 
-class BUTTONS {
-  constructor() {
-      const but = new PIXI.Sprite(textureButton);
-      but.anchor.set(0.5);
-      but.x = butX;
-      but.y = 350;
-      // interactive
-      but.interactive = true;
-      but.buttonMode = true;
-      but
-      but.scale.set(0.1);
-      app.stage.addChild(but);
-      but.on('mousedown', buttonDOWN)
-      but.on('mouseup', buttonUP)
-  }
-}
-
-function buttonDOWN(){
-  this.texture = textureButtonDown;
-  this.alpha = 1;
-  this.isdown = true;
-}
-
-function buttonUP(){
-  gravity = 0.1;
-  this.texture = textureButton;
-  this.isdown = false;
-}
-
-for (let i = 0; i < 4; i++) {
-  buttonArray.push(new BUTTONS);
-  butX+=100;
-}
 
 // button posiiton in array and for loop creating 3
 const buttonPositions = [
@@ -298,6 +271,67 @@ text3.style = new PIXI.TextStyle({
 })
 
 app.stage.addChild(text3)
+
+text4 = new PIXI.Text("Remove");
+text4.x = 400;
+text4.y = 550;
+text4.anchor.set(0.5);
+text4.style = new PIXI.TextStyle({
+  fill: 0x000000,
+  fontSize: 20,
+  fontFamily: 'Orbitron';
+})
+
+app.stage.addChild(text4)
+
+/// button class 
+class BUTTONS {
+  constructor() {
+      const but = new PIXI.Sprite(textureButton);
+      but.anchor.set(0.5);
+      but.x = butX;
+      but.y = 350;
+      // interactive
+      but.interactive = true;
+      but.buttonMode = true;
+      but;
+      but.scale.set(0.1);
+      app.stage.addChild(but);
+      but.on('mousedown', buttonDOWN);
+      but.on('mouseup', buttonUP);
+      but.on('mouseover', movebutton);
+      but.on('mouseout', movebuttonback);
+  }
+}
+
+for (let i = 0; i < 4; i++) {
+  buttonArray.push(new BUTTONS);
+  butX+=100;
+}
+
+function buttonDOWN(){
+  this.texture = textureButtonDown;
+  this.alpha = 1;
+  this.isdown = true;
+}
+
+function buttonUP(){
+  this.texture = textureButton;
+  this.isdown = false;
+}
+function movebutton() {
+  TweenMax.to(this.scale.set(0.12));
+}
+function movebuttonback() {
+  TweenMax.to(this.scale.set(0.1));
+}
+
+
+buttonArray[0].on('mousedown', but0D);
+
+function but0D(){
+  gravity = 1.2;
+}
 
 
 
